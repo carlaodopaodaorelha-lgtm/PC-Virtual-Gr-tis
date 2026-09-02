@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meu Google</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 150px;
+            background: white;
+        }
+
+        h1 {
+            font-size: 70px;
+            color: #4285F4;
+        }
+
+        input {
+            width: 500px;
+            padding: 15px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 18px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Google</h1>
+
+    <input id="pesquisa" placeholder="Pesquise alguma coisa...">
+
+    <br>
+
+    <button onclick="pesquisar()">Pesquisa Google</button>
+
+    <script>
+        function pesquisar() {
+            let texto = document.getElementById("pesquisa").value;
+
+            if (texto !== "") {
+                window.location.href =
+                    "https://www.google.com/search?q=" +
+                    encodeURIComponent(texto);
+            }
+        }
+    </script>
+
+</body>
+</html>
