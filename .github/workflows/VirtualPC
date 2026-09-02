@@ -1,0 +1,50 @@
+import os
+
+class VirtualPC:
+    def __init__(self):
+        self.fs = {"root": {"readme.txt": "Bem-vindo ao seu PC Virtual!"}}
+        self.current_dir = ["root"]
+        self.running = True
+
+    def _get_dir(self):
+        ref = self.fs
+        for path in self.current_dir:
+            ref = ref[path]
+        return ref
+
+    def run(self):
+        print("=== PC VIRTUAL INICIADO ===")
+        print("Comandos disponíveis: ls, cat <file>, mkdir <dir>, echo <text> > <file>, exit\n")
+        
+        while self.running:
+            path_str = "/" + "/".join(self.current_dir)
+            cmd_input = input(f"user@virtual-pc:{path_str}$ ").strip().split(" ")
+            cmd = cmd_input[0]
+            args = cmd_input[1:]
+
+            if cmd == "exit":
+                self.running = False
+                print("Desligando PC Virtual...")
+            elif cmd == "ls":
+                curr = self._get_dir()
+                print("  ".join(curr.keys()))
+            elif cmd == "mkdir" and args:
+                curr = self._get_dir()
+                curr[args[0]] = {}
+            elif cmd == "cat" and args:
+                curr = self._get_dir()
+                print(curr.get(args[0], "Arquivo não encontrado."))
+            elif cmd == "echo" and ">" in args:
+                idx = args.index(">")
+                text = " ".join(args[:idx])
+                filename = args[idx+1]
+                curr = self._get_dir()
+                curr[filename] = text
+            elif cmd == "":
+                pass
+            else:
+                print(f"Comando não reconhecido: {cmd}")
+
+if __name__ == "__main__":
+    pc = VirtualPC()
+    pc.run()
